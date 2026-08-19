@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smart-anti-fuel-theft-monitoring-system-2l4b423ou.vercel.app/sitemap.xml
