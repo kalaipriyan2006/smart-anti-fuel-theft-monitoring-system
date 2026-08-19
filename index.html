@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function() {
+        function isWsError(msg) {
+          if (!msg) return false;
+          var text = String(msg).toLowerCase();
+          return text.includes('websocket') || text.includes('closed without opened') || text.includes('[vite]');
+        }
+
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = e.reason;
+          var msg = (reason && (reason.message || reason.stack || reason)) || '';
+          if (isWsError(msg)) {
+            e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+
+        window.addEventListener('error', function(e) {
+          var msg = e.message || (e.error && (e.error.message || e.error.stack)) || '';
+          if (isWsError(msg)) {
+            e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Anti-Fuel Theft Monitoring System</title>
+    <meta name="description" content="Enterprise-grade real-time IoT vehicle fuel monitoring and GPS fleet tracking platform." />
+    <meta property="og:title" content="My Google AI Studio App" />
+    <meta property="og:description" content="An application built with Google AI Studio." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
