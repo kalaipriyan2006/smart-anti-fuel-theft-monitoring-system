@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext.js';
-import { Shield, Lock, Mail, AlertCircle, ArrowRight, CheckCircle2, User } from 'lucide-react';
+import { Shield, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
 
 interface LoginPageProps {
   onSuccess?: () => void;
@@ -9,8 +9,8 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onNavigateRegister }) => {
   const { login } = useAuth();
-  const [email, setEmail] = useState<string>('kpriyan997@gmail.com');
-  const [password, setPassword] = useState<string>('Owner1234!');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -31,11 +31,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onNavigateRegis
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickLogin = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
   };
 
   return (
@@ -100,39 +95,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onNavigateRegis
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        {/* Quick Role Profiles */}
-        <div className="pt-4 border-t border-zinc-800 space-y-2">
-          <div className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider text-center">
-            Quick-Fill Role Credentials
-          </div>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('kpriyan997@gmail.com', 'Owner1234!')}
-              className="p-2 bg-zinc-850 hover:bg-zinc-800 border border-zinc-700 rounded-lg text-left transition"
-            >
-              <div className="text-[11px] font-bold text-emerald-400">Fleet Owner</div>
-              <div className="text-[9px] text-zinc-400 truncate">kpriyan997@...</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('admin@antifueltheft.io', 'Admin1234!')}
-              className="p-2 bg-zinc-850 hover:bg-zinc-800 border border-zinc-700 rounded-lg text-left transition"
-            >
-              <div className="text-[11px] font-bold text-blue-400">Admin</div>
-              <div className="text-[9px] text-zinc-400 truncate">admin@anti...</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('support@antifueltheft.io', 'Support1234!')}
-              className="p-2 bg-zinc-850 hover:bg-zinc-800 border border-zinc-700 rounded-lg text-left transition"
-            >
-              <div className="text-[11px] font-bold text-purple-400">Support</div>
-              <div className="text-[9px] text-zinc-400 truncate">support@anti...</div>
-            </button>
-          </div>
-        </div>
 
         <div className="text-center text-xs text-zinc-400">
           Don't have an account?{' '}
