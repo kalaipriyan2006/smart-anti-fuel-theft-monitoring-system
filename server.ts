@@ -11,6 +11,7 @@ import {
   diagnoseHardwareWithAI,
   draftSupportResolutionWithAI
 } from './server/ai.js';
+const PORT = 3000;
 
 process.on('uncaughtException', (err) => {
   console.error('Process uncaughtException caught:', err);
@@ -20,9 +21,9 @@ process.on('unhandledRejection', (reason) => {
   console.error('Process unhandledRejection caught:', reason);
 });
 
-async function startServer() {
+export async function createApp() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // Root and Ingress Health check endpoints (REQUIRED for Cloud Run and Load Balancers)
   app.get('/health', (req: Request, res: Response) => {
@@ -1550,11 +1551,15 @@ void triggerLocalAlarm(int durationSeconds) {
     }
   });
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Smart Anti-Fuel Theft Monitoring System Server running at http://0.0.0.0:${PORT}`);
-  });
+  return app;
 }
 
-startServer().catch(err => {
-  console.error('Failed to start server:', err);
-});
+if (!process.env.VERCEL) {
+  createApp().then(app => {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Smart Anti-Fuel Theft Monitoring System Server running at http://0.0.0.0:${PORT}`);
+    });
+  }).catch(err => {
+    console.error('Failed to start server:', err);
+  });
+}
