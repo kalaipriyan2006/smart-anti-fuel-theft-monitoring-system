@@ -27,7 +27,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onNavigateRegis
       await login(email, password);
       onSuccess?.();
     } catch (err: any) {
-      setError(err.message || 'Authentication failed. Please check credentials.');
+      const message = err?.message || '';
+      setError(message.includes('404')
+        ? 'Login service is temporarily unavailable. Please refresh and try again.'
+        : message.includes('Failed to fetch')
+          ? 'Unable to connect to the login service. Please check your connection and try again.'
+          : message || 'Authentication failed. Please check your email and password.');
     } finally {
       setLoading(false);
     }
